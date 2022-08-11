@@ -6,10 +6,24 @@ module.exports = {
   getAllUsers,
 };
 
-async function getAllUsers() {
+async function getAllUsers(users) 
+  try {
+    const {rows: users } = await client.query(`
+    SELECT users.*   FROM users
+    `);
   /* this adapter should fetch a list of users from your db */
-}
 
-async function createUser(){
+ 
+    return users;
+  } catch (error) {
+    throw error;
+  }
 
+
+  async function createUser  ({ username, password }) {
+    const { rows: [user]}  = await client.query( `INSERT INTO users( username, password )
+    VALUES($1, $2)
+    ON CONFLICT(username) DO NOTHING
+    RETURNING id, username
+    ;`, [username,password]);
 }

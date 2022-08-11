@@ -1,60 +1,64 @@
 const {
-  client,
+  client
   // declare your model imports here
   // for example, User
-} = require('./');
+}= require('./DB_cyborg flying');
 
 
 
-async function buildTables() {
+
+async function dropTables() {
   try {
     client.connect();
-    await client.query(`DROP TABLE IF EXISTS order;
-    DROP TABLES IF EXISTS products;
-    DROP TABLES IF EXISTS users;
-    DROP TABLES IF EXISTS shoppingcart;
-    DROP TABLES IF EXISTS role;
+    await client.query(`
+    DROP TABLE IF EXISTS cart_order,
+    DROP TABLES IF EXISTS products,
+    DROP TABLES IF EXISTS users ,
+    DROP TABLES IF EXISTS cart_items,
+    DROP TABLES IF EXISTS role,
+  
 
     
-    `);
-    
-    console.log("starting to create tables")
-    
-    await client.query(`CREATE Table products  (
+    `)}
+    catch(error) {
+      throw error
+    }
+  };
+
+    async function createTables(){
+      try {
+        client.connect()
+    await client.query(`CREATE Table products)(
       id INT,
       name VARCHAR(255),
       description TEXT,
-      price DECIMAL(3,2),
-
-
-
-
+      price DECIMAL(3,2);
       );
-
-      CREATE TABLE users(
+    
+       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        address VARCHAR(255),
+        address VARCHAR(255);
       );
 
-      CREATE TABLE order(
+      CREATE TABLE cart_order(
         id SERIAL PRIMARY KEY,
         amount DECIMAL(6,2),
-        user_id INTEGER REFERENCE users(id),
+        user_id INTEGER REFERENCE users(id);
 
       )
 
-      CREATE TABLE shoppingcart(
+      CREATE TABLE cart_items(
         id INT,
         quantity INTEGER,
-        total_amount DECIMAL(7,2)
+        total_amount DECIMAL(7,2);
       )
 
       CREATE TABLE role(
         id INT,
-        name VARCHAR(255),
+        name VARCHAR(255);
       )
       `)
       console.log("finished creating tables")
@@ -65,22 +69,22 @@ async function buildTables() {
   } catch (error) {
     throw error;
   }
-}
+};
 
 async function populateInitialData() {
   try {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
-    const user1 = await User.createUser({
+    const user1 = await user1.createUser({
       
     })
   } catch (error) {
     throw error;
   }
-}
+};
 
-buildTables()
+createTables()
   .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());
