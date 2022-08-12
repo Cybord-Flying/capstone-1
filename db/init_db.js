@@ -1,90 +1,125 @@
+
 const {
-  client
+   createProduct
   // declare your model imports here
   // for example, User
-}= require('./DB_cyborg flying');
+}= require('../db/models/products');
+
+const  client = require('./client')
 
 
-
-
-async function dropTables() {
-  try {
-    client.connect();
-    await client.query(`
-    DROP TABLE IF EXISTS cart_order,
-    DROP TABLES IF EXISTS products,
-    DROP TABLES IF EXISTS users ,
-    DROP TABLES IF EXISTS cart_items,
-    DROP TABLES IF EXISTS role,
-  
 
     
-    `)}
-    catch(error) {
-      throw error
-    }
-  };
+    
+  
 
     async function createTables(){
-      try {
-        client.connect()
-    await client.query(`CREATE Table products)(
-      id INT,
-      name VARCHAR(255),
-      description TEXT,
-      price DECIMAL(3,2);
+  
+        client.connect();
+        await client.query(`
+    DROP TABLE IF EXISTS cart_items;
+    DROP TABLE IF EXISTS cart_order;
+    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS role;
+    DROP TABLE IF EXISTS products;
+    `);
+        console.log('creating tables')
+    await client.query(`
+    CREATE TABLE products(
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      description TEXT NOT NULL,
+      price DECIMAL(5,2) DEFAULT 0,
+      image TEXT
+      );
+      
+      CREATE TABLE role(
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL
       );
     
        CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        address VARCHAR(255);
+        "roleId" INTEGER REFERENCES role(id)
       );
 
       CREATE TABLE cart_order(
         id SERIAL PRIMARY KEY,
-        amount DECIMAL(6,2),
-        user_id INTEGER REFERENCE users(id);
+        "orderStatus" BOOLEAN DEFAULT TRUE,
+        "userId" INTEGER REFERENCES users(id)
 
-      )
+      );
 
       CREATE TABLE cart_items(
-        id INT,
-        quantity INTEGER,
-        total_amount DECIMAL(7,2);
-      )
+        id SERIAL PRIMARY KEY,
+        "productId" INTEGER REFERENCES products(id),
+        "orderId" INTEGER REFERENCES cart_order(id)
 
-      CREATE TABLE role(
-        id INT,
-        name VARCHAR(255);
-      )
+      );
+
+      
+      
       `)
       console.log("finished creating tables")
     // drop tables in correct order
    
 
     // build tables in correct order
-  } catch (error) {
-    throw error;
-  }
-};
+    
+  };
 
 async function populateInitialData() {
   try {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
-    const user1 = await user1.createUser({
-      
-    })
+    const product1 = await createProduct({name: "Special",
+    description: "special",
+  price: 145.99,
+image: "google.com",})
+
+const product2 = await createProduct({name: "Ferme",
+description : "special",
+price : 125.99,
+image : "google.com"})
+
+const product3 = await createProduct ({name: "Duke",
+description: "duke",
+price: 200.99,
+image :"google.com"})
+
+const product4 = await createProduct ({name: "Monarch",
+description: "monarch",
+price: 165.99,
+image :" google.com"})
+
+const product5 = await createProduct ({name: "Montblane",
+description: "montblane",
+price: 85.99,
+image :" google.com"})
+
+const product6 = await createProduct ({name: "Jaeger",
+description: "Jaeger",
+price: 105.99,
+image :"google.com"})
+
+
+
+   
+
+
   } catch (error) {
     throw error;
   }
 };
 
+
+
 createTables()
   .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());
+
+
