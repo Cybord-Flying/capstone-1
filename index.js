@@ -27,7 +27,11 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
+<<<<<<< HEAD
 const { client } = require('./DB_cyborg flying');
+=======
+const { client } = require('./db/DB_cyborg flying');
+>>>>>>> a0fd15e92487a3230cdcbf61ca6c47cb81ca34dd
 
 // connect to the server
 const PORT = process.env.PORT || 4000;

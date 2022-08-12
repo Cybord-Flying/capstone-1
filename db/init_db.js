@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 const {
    createProduct
@@ -69,12 +70,32 @@ const  client = require('./client')
     // build tables in correct order
     
   };
+=======
+const {
+  client,
+  // declare your model imports here
+  // for example, User
+} = require('./');
+
+async function buildTables() {
+  try {
+    client.connect();
+
+    // drop tables in correct order
+
+    // build tables in correct order
+  } catch (error) {
+    throw error;
+  }
+}
+>>>>>>> a0fd15e92487a3230cdcbf61ca6c47cb81ca34dd
 
 async function populateInitialData() {
   try {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
+<<<<<<< HEAD
     const product1 = await createProduct({name: "Special",
     description: "special",
   price: 145.99,
@@ -123,3 +144,14 @@ createTables()
   .finally(() => client.end());
 
 
+=======
+  } catch (error) {
+    throw error;
+  }
+}
+
+buildTables()
+  .then(populateInitialData)
+  .catch(console.error)
+  .finally(() => client.end());
+>>>>>>> a0fd15e92487a3230cdcbf61ca6c47cb81ca34dd

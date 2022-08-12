@@ -3,6 +3,7 @@ const client = require('../client');
 
 module.exports = {
   // add your database adapter fns here
+<<<<<<< HEAD
   createUser,
   getAllUsers,
 };
@@ -34,4 +35,11 @@ catch (error){
 throw error
   }
   
+=======
+  getAllUsers,
+};
+
+async function getAllUsers() {
+  /* this adapter should fetch a list of users from your db */
+>>>>>>> a0fd15e92487a3230cdcbf61ca6c47cb81ca34dd
 }
