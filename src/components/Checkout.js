@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import "./Checkout.css"
@@ -15,7 +15,7 @@ const Checkout = ({total}) => {
     const confirmation = async () => {
        let token = localStorage.getItem('token')
        if (token) {
-            const response = await fetch('/api/cart_orders', {
+            await fetch('/api/cart_orders', {
                 method: 'PATCH',
                 headers: {
                     'Content-type': 'application/json',

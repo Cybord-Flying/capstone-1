@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import "./SingleProduct.css";
 
-const SingleProduct = ({token, isLoggedIn, setIsLoggedIn, isAdmin}) => {
+const SingleProduct = ({token, isLoggedIn, isAdmin}) => {
     const { id } = useParams();
     const navigate = useNavigate()
     const [singleProduct, setSingleProduct] = useState({})
@@ -18,9 +18,8 @@ const SingleProduct = ({token, isLoggedIn, setIsLoggedIn, isAdmin}) => {
         try {
             const response = await fetch(`/api/products/${id}`)
             const data = await response.json();
-            console.log("this is the response:", data)
+          
             setSingleProduct(data)
-           console.log("token:", token)
         } catch (error) {
             console.log(error)
         }
@@ -32,7 +31,6 @@ const SingleProduct = ({token, isLoggedIn, setIsLoggedIn, isAdmin}) => {
 
     const handleSubmit = async () => {
         try {
-            console.log('this is the quantitiy', quantity)
             if (isLoggedIn) {
             const response = await fetch(`/api/cart_items`, {
                 method: 'POST',
@@ -48,7 +46,6 @@ const SingleProduct = ({token, isLoggedIn, setIsLoggedIn, isAdmin}) => {
             })
             const data = await response.json();
         } else {
-            console.log('this is the quantity', quantity)
             const response = await fetch(`/api/cart_items`, {
                 method: 'POST',
                 headers: {
@@ -61,9 +58,6 @@ const SingleProduct = ({token, isLoggedIn, setIsLoggedIn, isAdmin}) => {
             })
             const data = await response.json();
         }
-        
-            
-        // console.log("this is the response:", data)
             
         } catch (error) {
             console.log(error)
@@ -90,9 +84,7 @@ const SingleProduct = ({token, isLoggedIn, setIsLoggedIn, isAdmin}) => {
                         image
                 })
             })
-            console.log(response);
             const data = await response.json();
-            console.log('data: fsdfsdfsfsfs', data);
             fetchSingleProduct()
         } catch (error) {
             console.log(error)
