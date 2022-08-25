@@ -13,7 +13,6 @@ const Shop = () => {
                 const response = await fetch('/api/products');
                 const data = await response.json();
 
-                console.log(data);
                     setProducts(data);
                 } catch (error) {
                     console.error(error);
@@ -36,7 +35,6 @@ const Shop = () => {
             {
              
                 products.length ? products.map((currentProduct, idx) => {
-                    console.log(currentProduct);
                 return (
                    
                         <div className ="indivProduct" key={idx}>
@@ -44,7 +42,6 @@ const Shop = () => {
                             <img className='product-img' src={currentProduct.image} alt={currentProduct.description}></img>
                             <p className="product-name">{currentProduct.name}</p>
                             <p className="product-price">${currentProduct.price}</p>
-                            {/* <p>{currentProduct.description}</p> */}
                             <button className="viewButton" value={currentProduct.id} onClick={view}>VIEW</button>
                         
                        

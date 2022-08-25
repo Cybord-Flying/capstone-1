@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './Register.css';
 
-const Register = ({setIsLoggedIn, token, setToken, setIsAdmin}) => {
+const Register = ({setIsLoggedIn, setToken, setIsAdmin}) => {
     const navigate = useNavigate()
 
     const [username, setUsername] = useState('');
@@ -23,9 +23,7 @@ const Register = ({setIsLoggedIn, token, setToken, setIsAdmin}) => {
                         roleId: 1
                 })
             })
-            console.log(response);
             const data = await response.json();
-            console.log('data:', data);
             if (data.user.roleId === 2) {
                 setIsAdmin(true)
                 localStorage.setItem("isAdmin", true)

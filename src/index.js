@@ -6,8 +6,8 @@
 // place them in the src/style directory, and import them like this:
 import './style/index.css';
 
-import React, { useEffect, useState } from 'react';
-import ReactDOM, { render } from 'react-dom';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import { Users, Header, Shop, Home, Cart, About, Register, Login, SingleProduct, Checkout, Products } from './components';

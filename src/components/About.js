@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './About.css';
 import adimage2 from './adimage2_aboutpage.jpeg';

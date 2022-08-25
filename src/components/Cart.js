@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './Cart.css';
 
-const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total, setTotal, subTotal, setSubTotal}) => {
+const Cart = ({cart, setCart, isLoggedIn, token, total, setTotal, subTotal, setSubTotal}) => {
     const navigate = useNavigate()
 
     const fetchCart = async () => {
@@ -11,7 +11,6 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
             if (!isLoggedIn) {
             const response = await fetch('/api/cart_items');
             const data = await response.json();
-            console.log('fsfsdfsdfs', data);
             setCart(data);
             let sum = 0;
             data.forEach((item) => {
@@ -22,7 +21,6 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
             data.forEach((item) => {
                 sub = Number(sub) + Number(item.quantity)
             })
-            console.log('this is the sub', sub)
             setSubTotal(sub)
             } else {
                 const response = await fetch('/api/cart_items', {
@@ -33,7 +31,6 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
                 }
             );
                 const data = await response.json();
-                console.log(data);
                 setCart(data);
                 let sum = 0;
                 data.forEach((item) => {
@@ -67,7 +64,7 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
      const deleteHandler = async (e) => {
         try {
             if (isLoggedIn) {
-                const response = await fetch(`/api/cart_items/${e.target.value}`, {
+                await fetch(`/api/cart_items/${e.target.value}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-type': 'application/json',
@@ -76,7 +73,7 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
                 })
                 fetchCart()
             } else {
-                const response = await fetch(`/api/cart_items/${e.target.value}`, {
+                await fetch(`/api/cart_items/${e.target.value}`, {
                     method: 'DELETE',
                 })
                 fetchCart()
@@ -89,8 +86,7 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
      const changeHandler = async (e) => {
         try {
             if (isLoggedIn) {
-                console.log(e.target)
-                const response = await fetch(`/api/cart_items/${e.target.getAttribute("data-itemId")}`, {
+                await fetch(`/api/cart_items/${e.target.getAttribute("data-itemId")}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-type': 'application/json',
@@ -104,8 +100,7 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
                 })
                 fetchCart()
             } else {
-                console.log(e.target.getAttribute("data-productId"))
-                const response = await fetch(`/api/cart_items/${e.target.getAttribute("data-itemId")}`, {
+                await fetch(`/api/cart_items/${e.target.getAttribute("data-itemId")}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-type': 'application/json'
@@ -127,7 +122,6 @@ const Cart = ({cart, setCart, isLoggedIn, setIsLoggedIn, token, setToken, total,
                 <h1>Shopping Cart</h1>
                 {
                 cart.length ? cart.map((currentItem, idx) => {
-                    console.log("current item:", cart);
                 return (
                     <div className='indivItemContainer'>
                         <div className='imageContainer'>

@@ -2,14 +2,12 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
 
-const Login = ({setIsLoggedIn, token, setToken, setIsAdmin}) => {
+const Login = ({setIsLoggedIn, setToken, setIsAdmin}) => {
     const navigate = useNavigate()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('')
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("username:", username)
-        console.log("password:", password)
         try {
             const response = await fetch(`/api/users/login`, {
                 method: 'POST',
@@ -21,10 +19,7 @@ const Login = ({setIsLoggedIn, token, setToken, setIsAdmin}) => {
                         password: password
                 })
             })
-            console.log(response)
             const data = await response.json();
-            console.log('data:', data)
-            console.log('token:', data.token)
             if (data.user.roleId === 2) {
                 setIsAdmin(true)
                 localStorage.setItem("isAdmin", true)

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import './Products.css';
 
@@ -24,9 +24,7 @@ const Products = ({isAdmin, token}) => {
                         image
                 })
             })
-            console.log(response);
             const data = await response.json();
-            console.log('data: fsdfsdfsfsfs', data);
             
         } catch (error) {
             console.log(error)

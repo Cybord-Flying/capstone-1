@@ -15,8 +15,6 @@ const Users = ({token}) => {
                     }
                 });
                 const data = await response.json();
-
-                console.log(data);
                 setAllUsers(data);
             } catch (error) {
                 console.error(error);
